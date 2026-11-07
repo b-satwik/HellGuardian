@@ -3,10 +3,8 @@
  * Supports local execution and persistent cloud hosting via GitHub Pages.
  */
 window.HELLGUARDIAN_CONFIG = {
-  // Cloud backend API URL. Leave as "" for same-origin local proxy or development server.
-  // In production on GitHub Pages, replace with your cloud backend URL, e.g.:
-  // API_BASE_URL: "https://hellguardian-api.onrender.com"
-  API_BASE_URL: "",
+  // Cloud backend API URL. Connected to production Render deployment.
+  API_BASE_URL: "https://hellguardian-api.onrender.com",
 
   // Sensor offline threshold in seconds (default 300s = 5 minutes)
   SENSOR_OFFLINE_THRESHOLD_SECONDS: 300,
