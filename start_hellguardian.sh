@@ -8,6 +8,13 @@ set -e
 
 HELLGUARDIAN_DIR="/home/balasatwik/HellGuardian"
 ADAPTIVECOWRIE_DIR="${ADAPTIVECOWRIE_DIR:-/home/balasatwik/AdaptiveCowrie}"
+
+# Source local .env if present
+if [ -f "${HELLGUARDIAN_DIR}/.env" ]; then
+    set -a
+    . "${HELLGUARDIAN_DIR}/.env"
+    set +a
+fi
 CLOUD_PID_FILE="/tmp/hellguardian_cloud.pid"
 PUBLISHER_PID_FILE="/tmp/hellguardian_publisher.pid"
 CLOUD_LOG="/tmp/hellguardian_cloud.log"

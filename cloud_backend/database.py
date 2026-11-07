@@ -5,6 +5,41 @@ import time
 from typing import Dict, Any, List, Optional
 from cloud_backend.config import config
 
+class PostgresCursorWrapper:
+    def __init__(self, cursor):
+        self.cursor = cursor
+
+    def execute(self, query, params=None):
+        query = query.replace("?", "%s")
+        if params is not None:
+            return self.cursor.execute(query, params)
+        return self.cursor.execute(query)
+
+    def executemany(self, query, params=None):
+        query = query.replace("?", "%s")
+        return self.cursor.executemany(query, params)
+
+    def __getattr__(self, name):
+        return getattr(self.cursor, name)
+
+
+class PostgresConnectionWrapper:
+    def __init__(self, conn):
+        self.conn = conn
+
+    def cursor(self, *args, **kwargs):
+        cur = self.conn.cursor(*args, **kwargs)
+        return PostgresCursorWrapper(cur)
+
+    def commit(self):
+        return self.conn.commit()
+
+    def close(self):
+        return self.conn.close()
+
+    def __getattr__(self, name):
+        return getattr(self.conn, name)
+
 class CloudDatabase:
     """
     Persistent Database Manager for HellGuardian Cloud Telemetry.
@@ -34,10 +69,9 @@ class CloudDatabase:
     def get_connection(self):
         if self.is_postgres:
             import psycopg2
-            from psycopg2.extras import RealDictCursor
             conn = psycopg2.connect(self.db_url)
             conn.autocommit = True
-            return conn
+            return PostgresConnectionWrapper(conn)
         else:
             conn = sqlite3.connect(self.sqlite_path, timeout=10.0)
             conn.row_factory = sqlite3.Row
