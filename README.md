@@ -253,7 +253,27 @@ window.HELLGUARDIAN_CONFIG = {
 
 ---
 
-## 8. Security & Hardening Checklist
+## 8. Verified Synchronized Historical Telemetry
+
+The platform synchronizes and persists all historical honeypot records in the cloud PostgreSQL database, making them permanently accessible on GitHub Pages even when the local VM is offline:
+
+| Sensor / Module | Synced Record Count | Data Content & Features |
+| :--- | :---: | :--- |
+| **Cowrie SSH / Telnet** | **51 Sessions** | Full command history, file creations, downloads, keystroke timings & TTY session replays |
+| **Attacker Profiles (ML)** | **49 Profiles** | XGBoost classification, confidence scores, threat ratings, SHAP feature importance & LIME |
+| **Timeline Events** | **4,637 Events** | Chronological normalized multi-honeypot attack feed with geolocation (lat/lon) & map coordinates |
+| **Suricata IDS** | **4,499 Alerts** | Packet signatures, TCP/UDP protocol flows, destination ports, traffic bytes & severity |
+| **Heralding Traps** | **5 Credentials** | Protocol brute-force attempts across SSH, PostgreSQL, FTP with masked passwords () |
+| **Conpot ICS / SCADA** | **5 Events** | Modbus holding register read requests, Kamstrup 382, IEC 104, IPMI PLC probe telemetry |
+| **D3 Threat Graph** | **270 Nodes / 620 Edges** | Interactive multi-stage campaign knowledge graph (IPs, Attacker Personas, MITRE techniques) |
+| **MITRE ATT&CK Matrix** | **8 Techniques** | T1190 (Initial Access), T1110 (Brute Force), T1021 (Lateral Movement), T1046 (Discovery), etc. |
+| **Adaptive Memory VFS** | **9 Attackers** | Persona retention, persistent virtual filesystem, session count, behavior risk scores |
+| **Indicators of Compromise** | **6 IoCs** | Malicious IP addresses, SHA256 hashes, VirusTotal enrichment details |
+| **Overview Statistics** | **51 Attacks, 6 Countries** | Top MITRE tactic (Credential Access), 9 unique attacker profiles, average threat score 4.3 |
+
+---
+
+## 9. Security & Hardening Checklist
 
 - [x] **Zero Plaintext Passwords**: Attacker-supplied passwords in authentication histories and credential logs are masked as `*****`.
 - [x] **No Private Keys**: SSH host keys (`etc/ssh_host_*`) remain isolated on the honeypot host.
