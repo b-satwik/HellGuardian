@@ -31,6 +31,40 @@ app.add_middleware(
 )
 
 # Helper function to convert DB rows to dictionaries
+
+def safe_int(val, default=0):
+    if val is None or val == "":
+        return default
+    try:
+        return int(float(val))
+    except (ValueError, TypeError):
+        return default
+
+def safe_float(val, default=0.0):
+    if val is None or val == "":
+        return default
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
+
+def normalize_severity(sev) -> int:
+    if isinstance(sev, (int, float)):
+        return int(sev)
+    if isinstance(sev, str):
+        s = sev.lower().strip()
+        mapping = {
+            "informational": 1, "info": 1, "low": 2, "medium": 3,
+            "med": 3, "high": 4, "critical": 5
+        }
+        if s in mapping:
+            return mapping[s]
+        try:
+            return int(float(s))
+        except ValueError:
+            return 1
+    return 1
+
 def rows_to_dicts(cursor, rows):
     if not rows:
         return []
@@ -212,7 +246,7 @@ def post_ingest(payload: IngestPayload):
                     ev.get("profile_id", "unknown"),
                     ev.get("source", "unknown"),
                     ev.get("event_type", "event"),
-                    ev.get("severity", 1),
+                    normalize_severity(ev.get("severity", 1)),
                     ev.get("command"),
                     ev.get("username"),
                     sanitize_credential(ev.get("password")),
@@ -317,13 +351,13 @@ def post_ingest(payload: IngestPayload):
                 """, (
                     a_id,
                     a.get("signature", "Generic Alert"),
-                    a.get("severity", 3),
+                    normalize_severity(a.get("severity", 3)),
                     a.get("proto", "TCP"),
                     a.get("src_ip"),
                     a.get("dst_ip"),
-                    a.get("dst_port"),
-                    a.get("packets", 1),
-                    a.get("bytes", 0),
+                    safe_int(a.get("dst_port"), 0),
+                    safe_int(a.get("packets"), 1),
+                    safe_int(a.get("bytes"), 0),
                     a.get("timestamp", ""),
                     a.get("event_type", "alert")
                 ))

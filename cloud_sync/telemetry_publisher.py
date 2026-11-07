@@ -51,6 +51,24 @@ logger = logging.getLogger("HellGuardianPublisher")
 
 TTYSTRUCT = "<iLiiLL"
 
+def normalize_severity(sev) -> int:
+    if isinstance(sev, (int, float)):
+        return int(sev)
+    if isinstance(sev, str):
+        s = sev.lower().strip()
+        mapping = {
+            "informational": 1, "info": 1, "low": 2, "medium": 3,
+            "med": 3, "high": 4, "critical": 5
+        }
+        if s in mapping:
+            return mapping[s]
+        try:
+            return int(float(s))
+        except ValueError:
+            return 1
+    return 1
+
+
 class TelemetryPublisher:
     """
     Lightweight, resilient local agent that reads processed honeypot telemetry,
@@ -654,7 +672,7 @@ class TelemetryPublisher:
                     "profile_id": ev.profile_id or "unknown",
                     "source": ev.source,
                     "event_type": ev.event_type,
-                    "severity": ev.severity,
+                    "severity": normalize_severity(ev.severity),
                     "command": ev.command,
                     "username": ev.username,
                     "password": masked_password,
@@ -677,7 +695,7 @@ class TelemetryPublisher:
                     suricata_alerts.append({
                         "alert_id": f"suricata_{ev.timestamp}_{src_ip}_{ev.network.get('dst_port')}",
                         "signature": alert_meta.get("signature", "Generic Flow Activity"),
-                        "severity": alert_meta.get("severity", 3),
+                        "severity": normalize_severity(alert_meta.get("severity", 3)),
                         "proto": ev.network.get("proto", "TCP"),
                         "src_ip": src_ip,
                         "dst_ip": ev.network.get("dst_ip", ev.network.get("dest_ip")),
