@@ -19,6 +19,19 @@ class PostgresCursorWrapper:
         query = query.replace("?", "%s")
         return self.cursor.executemany(query, params)
 
+    def fetchone(self):
+        return self.cursor.fetchone()
+
+    def fetchall(self):
+        return self.cursor.fetchall()
+
+    def fetchmany(self, size=None):
+        return self.cursor.fetchmany(size) if size else self.cursor.fetchmany()
+
+    @property
+    def description(self):
+        return self.cursor.description
+
     def __getattr__(self, name):
         return getattr(self.cursor, name)
 

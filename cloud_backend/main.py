@@ -53,22 +53,32 @@ def get_root():
 def get_health():
     last_hb = 0.0
     is_online = False
+    sess_cnt = 0
     try:
         conn = db.get_connection()
         cur = conn.cursor()
         cur.execute("SELECT last_heartbeat FROM sensor_nodes ORDER BY last_heartbeat DESC LIMIT 1")
         row = cur.fetchone()
-        conn.close()
         if row and row[0]:
             last_hb = float(row[0])
             if (time.time() - last_hb) <= config.OFFLINE_TIMEOUT_SECONDS:
                 is_online = True
+        try:
+            cur.execute("SELECT COUNT(*) FROM cowrie_sessions")
+            s_row = cur.fetchone()
+            if s_row:
+                sess_cnt = s_row[0] or 0
+        except Exception:
+            pass
+        conn.close()
     except Exception:
         pass
 
     return {
         "status": "ok",
         "database": "connected",
+        "database_type": "postgresql" if getattr(db, "is_postgres", False) else "sqlite",
+        "persisted_sessions": sess_cnt,
         "sensor_status": "Online" if is_online else "Offline (Historical Archive)",
         "last_heartbeat": last_hb,
         "current_time": time.time()

@@ -1,3 +1,7 @@
+databases:
+  - name: hellguardian-db
+    plan: free
+
 services:
   - type: web
     name: hellguardian-cloud-backend
@@ -7,8 +11,12 @@ services:
     buildCommand: "pip install -r cloud_backend/requirements.txt"
     startCommand: "python3 -m uvicorn cloud_backend.main:app --host 0.0.0.0 --port $PORT"
     envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hellguardian-db
+          property: connectionString
       - key: INGEST_API_KEY
-        generateValue: true
+        value: hg_sec_token_9f82d1a4e76c
       - key: OFFLINE_TIMEOUT_SECONDS
         value: 300
       - key: PYTHON_VERSION

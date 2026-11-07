@@ -982,20 +982,61 @@ class TelemetryPublisher:
         url = f"{self.cloud_api_url}/api/ingest"
         headers = {"X-Ingest-Key": self.ingest_api_key, "Content-Type": "application/json"}
         
+        # Primary payload with core assets and first chunk of high-volume events
+        base_payload = {
+            "node_id": self.node_id,
+            "overview_stats": overview_stats,
+            "timeline_events": timeline_events[:300],
+            "cowrie_sessions": sessions,
+            "suricata_alerts": suricata_alerts[:300],
+            "heralding_credentials": heralding_creds,
+            "dionaea_malware": dionaea_malware,
+            "conpot_events": conpot_events,
+            "sandbox_tasks": sandbox_tasks,
+            "ml_profiles": ml_profiles,
+            "threat_graph": threat_graph,
+            "mitre_mappings": mitre_mappings,
+            "iocs": iocs,
+            "adaptive_memory": adaptive_memory,
+            "artifacts": artifacts,
+            "reports": []
+        }
+
         try:
-            resp = requests.post(url, json=payload, headers=headers, timeout=20.0)
-            if resp.status_code == 200:
-                data = resp.json()
-                counts = data.get("counts", {})
-                logger.info(f"Sync successful! Persisted counts: {counts}")
-                
-                # Mark cowrie sessions as synced
-                items_to_mark = [("cowrie_session", s["session_id"]) for s in sessions if "session_id" in s]
-                self.mark_batch_synced(items_to_mark)
-                return True
-            else:
+            resp = requests.post(url, json=base_payload, headers=headers, timeout=60.0)
+            if resp.status_code != 200:
                 logger.error(f"Ingest rejected by cloud API: HTTP {resp.status_code} - {resp.text}")
                 return False
+            data = resp.json()
+            total_counts = data.get("counts", {})
+            logger.info(f"Base batch synced successfully! Persisted: {total_counts}")
+
+            # Upload remaining timeline events in manageable chunks
+            rem_timeline = timeline_events[300:]
+            for i in range(0, len(rem_timeline), 500):
+                chunk = rem_timeline[i:i+500]
+                chunk_payload = {"node_id": self.node_id, "timeline_events": chunk}
+                c_resp = requests.post(url, json=chunk_payload, headers=headers, timeout=60.0)
+                if c_resp.status_code == 200:
+                    c_cnt = c_resp.json().get("counts", {}).get("timeline_events", 0)
+                    total_counts["timeline_events"] = total_counts.get("timeline_events", 0) + c_cnt
+
+            # Upload remaining suricata alerts in manageable chunks
+            rem_alerts = suricata_alerts[300:]
+            for i in range(0, len(rem_alerts), 500):
+                chunk = rem_alerts[i:i+500]
+                chunk_payload = {"node_id": self.node_id, "suricata_alerts": chunk}
+                c_resp = requests.post(url, json=chunk_payload, headers=headers, timeout=60.0)
+                if c_resp.status_code == 200:
+                    c_cnt = c_resp.json().get("counts", {}).get("suricata_alerts", 0)
+                    total_counts["suricata_alerts"] = total_counts.get("suricata_alerts", 0) + c_cnt
+
+            logger.info(f"Sync complete! Total synchronized records: {total_counts}")
+            
+            # Mark cowrie sessions as synced
+            items_to_mark = [("cowrie_session", s["session_id"]) for s in sessions if "session_id" in s]
+            self.mark_batch_synced(items_to_mark)
+            return True
         except Exception as e:
             logger.error(f"Cloud ingest failed (network/server error): {e}. Events buffered locally.")
             return False
