@@ -1,0 +1,70 @@
+<!-- System Configurations Settings View Module -->
+<div class="settings-view-grid">
+  <div class="detail-panel">
+    <h3>System Configurations</h3>
+    <div style="margin-top:20px;">
+      <label style="display:block; margin-bottom:12px;">
+        <input type="checkbox" checked disabled> Ingest Splunk Index Data (Mode 2 API Integration)
+      </label>
+      <label style="display:block; margin-bottom:12px;">
+        <input type="checkbox" checked disabled> Ingest Local Log Files (Mode 1 Pipeline Integration)
+      </label>
+      <label style="display:block; margin-bottom:12px;">
+        <input type="checkbox" checked disabled> Update live_threat_graph.pkl State
+      </label>
+      <label style="display:block; margin-bottom:20px;">
+        <input type="checkbox" checked disabled> SQLite Database Synchronization
+      </label>
+      <p class="title-meta">HellGuardian research configurations are loaded dynamically via config.py.</p>
+    </div>
+  </div>
+
+  <div class="detail-panel">
+    <h3>Live Component & Service Monitor</h3>
+    <div class="settings-status-table" style="margin-top:20px;">
+      <div class="status-row">
+        <span class="status-lbl">System Status</span>
+        <span class="status-val badge-success" id="settings-system-status">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Log Parser</span>
+        <span class="status-val badge-success" id="settings-parser-status">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">SQLite Database</span>
+        <span class="status-val" id="settings-db-status">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">ML Inference Runtime</span>
+        <span class="status-val badge-success" id="settings-ml-status">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Sandbox Analyzer</span>
+        <span class="status-val badge-success" id="settings-sandbox-status">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">INetSim Mocks</span>
+        <span class="status-val" id="settings-inetsim-status">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Splunk Integration</span>
+        <span class="status-val" id="settings-splunk-status">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">XGBoost Model Version</span>
+        <span class="status-val" id="settings-model-version">Monitoring...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Database Size</span>
+        <span class="status-val" id="settings-db-size">Monitoring...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-panel full-width">
+    <h3>Docker Containers Status</h3>
+    <div class="containers-status-grid" id="settings-containers-list" style="margin-top:20px;">
+      <div class="offline-msg">Retrieving container states...</div>
+    </div>
+  </div>
+</div>

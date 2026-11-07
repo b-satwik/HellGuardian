@@ -1,0 +1,64 @@
+<!-- Cowrie Honeypot View Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <div>
+      <h3 style="margin:0;">Cowrie Kippo-style Analyst Console</h3>
+      <div id="cowrie-latest-activity-badge" style="font-size:11px; color:var(--text-muted, #8a8d9b); margin-top:4px;">
+        Latest Recorded Session: Loading...
+      </div>
+    </div>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <select id="cowrie-page-size" style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px; background:var(--bg-card, #1a1d2d); color:var(--text-color, #e1e4ed);">
+        <option value="10" selected>Show 10 entries</option>
+        <option value="20">Show 20 entries</option>
+        <option value="50">Show 50 entries</option>
+      </select>
+      <input type="text" id="cowrie-search" placeholder="Search sessions..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <select id="cowrie-filter-persona" style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;">
+        <option value="">All Personas</option>
+        <option value="Generic SSH Scanner">Generic SSH Scanner</option>
+        <option value="Brute Forcer">Brute Forcer</option>
+        <option value="Botnet Probe">Botnet Probe</option>
+        <option value="SCADA Attacker">SCADA Attacker</option>
+      </select>
+      <button id="cowrie-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="cowrie-table">
+      <thead>
+        <tr>
+          <th>Session ID</th>
+          <th>Profile ID</th>
+          <th>Attacker IP</th>
+          <th>Country</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>SSH Client</th>
+          <th>Login Time</th>
+          <th>Duration</th>
+          <th>Cmds</th>
+          <th>Files Created</th>
+          <th>Downloads</th>
+          <th>Persona</th>
+          <th>Fingerprint</th>
+          <th>Risk Score</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="16" class="offline-msg">No telemetry available.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="pagination-controls" style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:10px; border-top:1px solid var(--border-color, #2a2d3d); font-size:12px; color:var(--text-muted, #8a8d9b); flex-wrap:wrap; gap:10px;">
+    <div id="cowrie-pagination-info">Showing 0 of 0 recorded sessions</div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button id="cowrie-prev-page" class="action-btn" style="padding:4px 10px; font-size:12px;" disabled>&larr; Previous</button>
+      <div id="cowrie-page-numbers" style="display:flex; gap:4px; align-items:center;"></div>
+      <button id="cowrie-next-page" class="action-btn" style="padding:4px 10px; font-size:12px;" disabled>Next &rarr;</button>
+    </div>
+  </div>
+</div>

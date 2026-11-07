@@ -1,0 +1,29 @@
+<!-- IOC Intelligence Browser View Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <h3>Threat Indicators of Compromise (IOC) Browser</h3>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <input type="text" id="ioc-search" placeholder="Search IOCs..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <button id="ioc-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="ioc-table">
+      <thead>
+        <tr>
+          <th>Indicator Type</th>
+          <th>Value</th>
+          <th>Source Sensor</th>
+          <th>Origin Profile</th>
+          <th>Enrichment Summary</th>
+          <th>Details / Context</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody id="ioc-tbody">
+        <tr><td colspan="7" class="offline-msg">No indicator telemetry available.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

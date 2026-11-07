@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>HellGuardian // SOC Threat Intelligence Workspace</title>
+  
+  <!-- Font assets matching professional styling -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Outfit:wght@300;400;600;700;800&display=swap">
+  
+  <!-- Chart & Map dependencies -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://d3js.org/topojson.v3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+  <!-- Local asset links using relative paths for Apache deployment -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- Top Navigation Header Bar -->
+  <header class="top-nav-bar">
+    <div class="nav-top-row">
+      <div class="nav-logo">
+        <span class="logo-text">HellGuardian</span>
+      </div>
+      <div class="nav-search">
+        <input type="text" id="global-search" placeholder="Search profiles, sessions, alerts..." />
+      </div>
+      <div class="nav-meta">
+        <div class="status-badge" id="global-sensor-status-badge">
+          <span class="logo-dot pulse-animation" id="global-status-dot"></span>
+          <span id="global-status-text">STATUS: ACTIVE</span>
+          <span id="global-last-sync" style="font-size: 11px; opacity: 0.7; margin-left: 6px; display: none;"></span>
+        </div>
+        <div class="user-profile">
+          <span class="user-avatar">SA</span>
+          <span class="user-name">SOC Analyst</span>
+        </div>
+      </div>
+    </div>
+    <nav class="nav-links-container">
+      <ul class="nav-links">
+        <li class="active" data-view="home">Overview</li>
+        <li data-view="map">Live Map</li>
+        <li data-view="cowrie">Cowrie</li>
+        <li data-view="suricata">Suricata</li>
+        <li data-view="heralding">Heralding</li>
+        <li data-view="dionaea">Dionaea</li>
+        <li data-view="conpot">Conpot</li>
+        <li data-view="sandbox">Sandbox</li>
+        <li data-view="ioc">IOC Intelligence</li>
+        <li data-view="ml">Machine Learning</li>
+        <li data-view="mitre">MITRE ATT&CK</li>
+        <li data-view="graph">Threat Graph</li>
+        <li data-view="reports">Reports</li>
+        <li data-view="settings">Settings</li>
+        <li data-view="memory">Adaptive Memory</li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main View HUD Grid -->
+  <div class="main-hud" id="main-hud">
+    <main class="main-content">
+      <!-- View Ingestion Target Container -->
+      <div class="view-container" id="view-container">
+        <!-- Views will be dynamically loaded from pages/*.html and injected here -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Floating Chat Assistant -->
+  <button id="chat-fab" class="chat-fab">💬 Assistant</button>
+  
+  <div id="chat-panel" class="chat-panel" style="display: none;">
+    <div class="chat-header">
+      <span>HellGuardian Copilot</span>
+      <button id="chat-close" style="background:none; border:none; color:white; cursor:pointer; font-size:18px; font-weight:bold;">&times;</button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-msg system">
+        Hello Analyst. I can help analyze honeypot events. Select a profile or type a question below!
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chat-input" placeholder="Ask about active attackers..." />
+      <button id="chat-send" class="action-btn" style="padding:4px 8px;">Send</button>
+    </div>
+  </div>
+
+  <!-- Configuration Script for Cloud & GitHub Pages Deployment -->
+  <script src="./assets/js/config.js"></script>
+  <!-- Primary Application Script using relative paths -->
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Local Databases & State Tracking
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+sync_state.db
+hellguardian_cloud.db
+
+# Secrets & Local Configurations
+.env
+.env.*
+!.env.example
+
+# Logs and Process IDs
+*.log
+*.pid
+dashboard_output.log
+publisher_output.log
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# Editor & OS Artifacts
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

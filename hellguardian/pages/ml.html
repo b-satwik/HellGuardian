@@ -1,0 +1,53 @@
+<!-- Machine Learning Classifier View Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <h3>XGBoost Threat Classification Inference Engine</h3>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <input type="text" id="ml-search" placeholder="Search predictions..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <button id="ml-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="ml-table">
+      <thead>
+        <tr>
+          <th>Profile ID</th>
+          <th>Prediction</th>
+          <th>Confidence</th>
+          <th>Threat Score</th>
+          <th>Risk Level</th>
+          <th>Evidence Score</th>
+          <th>Behavior Score</th>
+          <th>Sessions</th>
+          <th>Timeline</th>
+          <th>Top Features</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody id="ml-tbody">
+        <tr><td colspan="11" class="offline-msg">No threat classifications recorded.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="cowrie-grid" id="ml-details-panel" style="display:none; margin-top:20px;">
+  <!-- Feature Vector -->
+  <div class="detail-panel">
+    <h3>Attacker Profile Feature Vector</h3>
+    <div class="settings-status-table" id="ml-features-vector" style="font-size:11px;"></div>
+  </div>
+  
+  <!-- Interactive Explanations -->
+  <div class="detail-panel">
+    <h3>XAI Interpretability Report</h3>
+    <div style="margin-top:10px;">
+      <h4 style="font-size:12px; margin-bottom:6px;">SHAP Feature Attribution Waterfall</h4>
+      <div id="ml-shap-bars" style="margin-bottom:15px;"></div>
+      
+      <h4 style="font-size:12px; margin-bottom:6px;">LIME Local Correlation Surrogate Indicators</h4>
+      <div id="ml-lime-cards"></div>
+    </div>
+  </div>
+</div>

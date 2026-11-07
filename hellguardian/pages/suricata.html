@@ -1,0 +1,30 @@
+<!-- Suricata IPS View Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <h3>Suricata Intrusion Detection Alerts</h3>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <input type="text" id="suricata-search" placeholder="Search alerts..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <button id="suricata-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="suricata-table">
+      <thead>
+        <tr>
+          <th>Signature</th>
+          <th>Severity</th>
+          <th>Protocol</th>
+          <th>Source IP</th>
+          <th>Target Port</th>
+          <th>Flow Packets</th>
+          <th>Flow Bytes</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody id="suricata-tbody">
+        <tr><td colspan="8" class="offline-msg">No intrusion alerts logged.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<!-- MITRE ATT&CK Matrix Mapping View Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <h3>MITRE ATT&CK TTP Mapping Console</h3>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <input type="text" id="mitre-search" placeholder="Search MITRE TTPs..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <button id="mitre-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="mitre-table">
+      <thead>
+        <tr>
+          <th>Technique ID</th>
+          <th>Technique</th>
+          <th>Tactic</th>
+          <th>Confidence</th>
+          <th>Evidence</th>
+          <th>Source Honeypot</th>
+          <th>Attacker IP</th>
+          <th>Profile ID</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody id="mitre-tbody">
+        <tr><td colspan="9" class="offline-msg">No MITRE ATT&CK mappings recorded.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

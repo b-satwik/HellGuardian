@@ -1,0 +1,46 @@
+<!-- Adaptive Deception Engine Memory Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <h3>Adaptive Engine Resident Profile Memory</h3>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <input type="text" id="memory-search" placeholder="Search profiles..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <button id="memory-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="memory-table">
+      <thead>
+        <tr>
+          <th>Profile ID</th>
+          <th>Fingerprint Hash / IP</th>
+          <th>Assigned Persona</th>
+          <th>Sessions</th>
+          <th>First Seen</th>
+          <th>Last Seen</th>
+          <th>VFS State</th>
+          <th>Behavior Score</th>
+          <th>Current Risk</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody id="memory-tbody">
+        <tr><td colspan="10" class="offline-msg">No profiles memory states available.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="cowrie-grid" id="memory-profile-panel" style="display:none; margin-top:20px;">
+  <!-- Persona & Risk History -->
+  <div class="detail-panel">
+    <h3>Profile Deception Persona History</h3>
+    <div class="settings-status-table" id="memory-persona-history" style="font-size:11px;"></div>
+  </div>
+  
+  <!-- Previous Sessions & Timeline -->
+  <div class="detail-panel">
+    <h3>Previous Sessions & Commands History</h3>
+    <ul class="timeline-list" id="memory-sessions-list" style="max-height: 250px; overflow-y: auto;"></ul>
+  </div>
+</div>

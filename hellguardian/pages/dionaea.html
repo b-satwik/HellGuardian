@@ -1,0 +1,31 @@
+<!-- Dionaea Honeypot View Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <h3>Dionaea Malware Capture Repository</h3>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <input type="text" id="dionaea-search" placeholder="Search malware..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <button id="dionaea-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="dionaea-table">
+      <thead>
+        <tr>
+          <th>SHA256</th>
+          <th>MD5</th>
+          <th>Malware Family</th>
+          <th>Download URL</th>
+          <th>Source IP</th>
+          <th>Detection Ratio</th>
+          <th>Sandbox Status</th>
+          <th>Timestamp</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody id="dionaea-tbody">
+        <tr><td colspan="9" class="offline-msg">No malware logs telemetry available.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

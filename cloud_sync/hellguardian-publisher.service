@@ -1,0 +1,17 @@
+[Unit]
+Description=HellGuardian Cloud Telemetry Publisher Agent
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+User=balasatwik
+WorkingDirectory=/home/balasatwik/HellGuardian
+Environment="PYTHONPATH=/home/balasatwik/HellGuardian:/home/balasatwik/AdaptiveCowrie/.venv/lib/python3.12/site-packages:/home/balasatwik/AdaptiveCowrie"
+EnvironmentFile=-/home/balasatwik/HellGuardian/.env
+ExecStart=/usr/bin/python3 /home/balasatwik/HellGuardian/cloud_sync/run_publisher.py --daemon
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

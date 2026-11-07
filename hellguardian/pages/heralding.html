@@ -1,0 +1,32 @@
+<!-- Heralding Honeypot View Module -->
+<div class="detail-panel">
+  <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+    <h3>Heralding Credentials Spray Observatory</h3>
+    <div style="display:flex; gap:10px; align-items: center; flex-wrap: wrap;">
+      <input type="text" id="heralding-search" placeholder="Search credentials..." style="padding:4px 8px; border:1px solid var(--border-color); font-size:12px; border-radius: 4px;" />
+      <button id="heralding-export" class="action-btn" style="padding:4px 8px; font-size:12px;">Export CSV</button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="data-table dense-table" id="heralding-table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Protocol</th>
+          <th>Target</th>
+          <th>Spray Count</th>
+          <th>First Seen</th>
+          <th>Last Seen</th>
+          <th>Country</th>
+          <th>Profile ID</th>
+          <th>Investigation</th>
+        </tr>
+      </thead>
+      <tbody id="heralding-tbody">
+        <tr><td colspan="10" class="offline-msg">No credentials telemetry available.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
