@@ -422,31 +422,47 @@ function drawWorldMap(events) {
 }
 
 function drawTrendChart() {
+  const chartEl = document.querySelector("#chart-trend");
+  if (!chartEl) return;
   fetch(getApiUrl("/api/charts/threat_trend"))
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error("Threat trend data unavailable");
+      return res.json();
+    })
     .then(data => {
+      if (!data || !data.attacks) return;
       const options = {
         chart: { type: 'area', height: 260, toolbar: { show: false }, background: 'transparent' },
         theme: { mode: 'light' },
         series: [
-          { name: 'Attack Vol', data: data.attacks },
-          { name: 'Threat Level', data: data.threat_scores }
+          { name: 'Attack Vol', data: data.attacks || [] },
+          { name: 'Threat Level', data: data.threat_scores || [] }
         ],
-        xaxis: { categories: data.labels },
+        xaxis: { categories: data.labels || [] },
         colors: ['#0066cc', '#af52de'],
         stroke: { curve: 'smooth', width: 2 },
         fill: { type: 'gradient', gradient: { opacityFrom: 0.1, opacityTo: 0 } },
         grid: { borderColor: '#e5e5ea' },
         dataLabels: { enabled: false }
       };
-      new ApexCharts(document.querySelector("#chart-trend"), options).render();
+      chartEl.innerHTML = "";
+      new ApexCharts(chartEl, options).render();
+    })
+    .catch(() => {
+      chartEl.innerHTML = `<div class="offline-msg" style="padding:40px 0;text-align:center;">Threat trend offline. Connect cloud backend to stream trend.</div>`;
     });
 }
 
 function drawDistributionChart() {
+  const chartEl = document.querySelector("#chart-pie");
+  if (!chartEl) return;
   fetch(getApiUrl("/api/charts/attack_distribution"))
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error("Attack distribution data unavailable");
+      return res.json();
+    })
     .then(data => {
+      if (!Array.isArray(data) || data.length === 0) return;
       const options = {
         chart: { type: 'donut', height: 260, background: 'transparent' },
         theme: { mode: 'light' },
@@ -454,7 +470,11 @@ function drawDistributionChart() {
         labels: data.map(d => d.category),
         colors: ['#0066cc', '#ff3b30', '#34c759', '#ff9500', '#af52de']
       };
-      new ApexCharts(document.querySelector("#chart-pie"), options).render();
+      chartEl.innerHTML = "";
+      new ApexCharts(chartEl, options).render();
+    })
+    .catch(() => {
+      chartEl.innerHTML = `<div class="offline-msg" style="padding:40px 0;text-align:center;">Attack distribution offline. Connect cloud backend to stream breakdown.</div>`;
     });
 }
 
